@@ -1,93 +1,84 @@
-# KyberFin
+# KyberFin - Gerenciador Financeiro Pessoal API
 
-KyberFin é um gerenciador financeiro pessoal minimalista e moderno, construído com Flask, SQLAlchemy e Pydantic.  
-Inspirado na vibe futurista e geek, ele nasceu para ser simples, seguro e escalável — ideal para quem quer ter controle total sobre suas finanças com tecnologia de ponta.
+## Visão Geral
+
+KyberFin é uma API RESTful minimalista para gerenciamento financeiro pessoal, desenvolvida com Flask e arquitetura limpa, pensada para escalabilidade e segurança.  
+Projetada para uso pessoal, com potencial de crescimento e integração contínua (CI/CD).
 
 ---
 
 ## Tecnologias
 
-- Python 3.9+
-- Flask
-- Flask-SQLAlchemy
-- Flask-JWT-Extended
-- Pydantic
-- PostgreSQL
-- python-dotenv
+- Python 3.11+  
+- Flask  
+- Pydantic (validação e modelagem de dados)  
+- PostgreSQL (banco de dados)  
+- psycopg2 (driver PostgreSQL)  
+- JWT para autenticação e segurança  
+- Passlib (hashing de senha com bcrypt)  
+- Docker (opcional para desenvolvimento e deploy)
 
 ---
 
-## Funcionalidades iniciais
+## Padrão de Resposta da API
 
-- Cadastro e atualização de usuários
-- Autenticação segura via JWT
-- Estrutura limpa e modular baseada em UseCases
-- Preparado para expansão com novas entidades financeiras
+Todas as respostas JSON seguem o padrão:
+
+```json
+{
+  "data": {...} | null,
+  "errors": [...] | null
+}
+```
+
+- Em sucesso: `data` contém o payload, `errors` é `null`.  
+- Em erro: `errors` contém lista de objetos `{ "code": "...", "message": "..." }`, `data` é `null`.
 
 ---
 
-## Setup Local
+## Rodando o Projeto
 
-1. Clone o repositório:
+### Pré-requisitos
 
-```bash
-git clone https://github.com/seu-usuario/kyberfin.git
-cd kyberfin/src
-```
+- Python 3.11+  
+- PostgreSQL rodando e configurado  
+- Variáveis de ambiente configuradas (ex: JWT_SECRET, DATABASE_URL)
 
-2. Crie e ative um ambiente virtual:
+### Passos
 
-```bash
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-```
-
-3. Instale as dependências:
+1. Instale as dependências:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Configure variáveis de ambiente:
+2. Configure variáveis de ambiente:
 
 - Copie `.env.example` para `.env` e ajuste conforme seu ambiente local, especialmente o `DATABASE_URL` e `JWT_SECRET_KEY`.
 
-5. Crie o banco PostgreSQL e rode a aplicação:
+3. Crie o banco PostgreSQL e rode a aplicação:
 
 ```bash
-# No psql ou outra ferramenta, crie o banco
-CREATE DATABASE finance_manager;
-
-# Rode o app
-python application/main.py
+python migrations/main.py
+python src/main.py
 ```
-
 ---
 
-## Como usar
+## Testes
 
-- Use os endpoints de cadastro `/users/` e login `/auth/login` para iniciar.
-- Autentique-se via JWT para acessar rotas protegidas.
-- Desenvolva novos módulos seguindo a arquitetura de UseCases.
-
----
-
-## Próximos passos
-
-- Implementar CRUD para contas, receitas e despesas
-- Testes automatizados
-- Dockerização e pipeline CI/CD
-- Deploy em nuvem (Render, Railway, etc.)
-- Documentação automática da API
+```bash
+pytest
+```
 
 ---
 
 ## Contato
 
-Desenvolvido por Humberto Lisboa — mantenha-se em contato!
+Desenvolvido por Humberto Lisboa – kyberfin@kyberfin.com
 
 ---
 
-## Licença
+Fique à vontade para abrir issues e pull requests!  
+Este projeto está em contínuo desenvolvimento para ser sua ferramenta financeira pessoal ideal.
 
-Apache-2.0 license
+---
